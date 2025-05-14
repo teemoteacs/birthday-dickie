@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poem for Dickie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f0ff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .card {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        
+        .card:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        .dancing-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #00f;
+            opacity: 0;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .heart-beat {
+            animation: heartbeat 1.5s ease infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.05); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .poem-line {
+            transition: all 0.3s ease;
+            transform-origin: left;
+        }
+        
+        .poem-line:hover {
+            transform: scale(1.02);
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        
+        .wave {
+            animation: wave 8s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .photo-gallery {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .photo-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .close-gallery {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-title {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="card bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl w-full max-w-2xl p-8 relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-400"></div>
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-blue-100 opacity-30"></div>
+        <div class="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-indigo-100 opacity-30"></div>
+        
+        <div class="relative z-10">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="dancing-font text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-2">
+                    Tula Para Kay Dickie
+                </h1>
+                <p class="text-blue-700">Tang ina mo ka</p>
+            </div>
+            
+            <!-- Interactive poetry book -->
+            <div class="flex justify-center mb-8">
+                <div class="relative w-48 h-48 cursor-pointer" id="poetryBook">
+                    <div class="absolute w-full h-full bg-gradient-to-br from-blue-300 to-indigo-400 rounded-lg shadow-lg flex items-center justify-center floating">
+                        <i class="fas fa-book-open text-white text-6xl heart-beat wave"></i>
+                    </div>
+                    <div class="absolute top-0 left-0 w-full h-full border-4 border-blue-200 rounded-lg opacity-30"></div>
+                </div>
+            </div>
+            
+            <!-- Poem container -->
+            <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-sm border border-white border-opacity-50">
+                <h2 class="text-xl font-semibold text-indigo-800 mb-4">For <span id="friendName" class="underline decoration-blue-500">Ben Jabowakis</span></h2>
+                
+                <div id="poemContainer" class="space-y-4 text-center">
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 0.2s;">Sana'y ikaw ay masaya sa iyong kaarawan</p>
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 0.4s;">Namnamin mo tula na aking pinaghandaan</p>
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 0.6s;">Basahin mong mabuti upang maintindihan,</p>
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 0.8s;">Sa susunod ikaw na ang aking didiligan.</p>
+                    
+                    <div class="h-4"></div>
+                    
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 1s;">Ikaw ay kasama sa aking mga pinakamamahal</p>
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 1.2s;">Iyong tagumpay lagi kong ipinagdarasal</p>
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 1.4s;">Susuportahan kita palagi pati sa araw ng iyong kasal</p>
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 1.6s;">Ipagpatuloy mo lang ang iyong mabuting asal.</p>
+                    
+                    <div class="h-4"></div>
+                    
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 1.8s;">Kung ikaw ay may problema ako'y handang makinig</p>
+                    <p class="poem-line text-blue-900 italic fade-in" style="animation-delay: 2s;">Kahit anong mangyari ako'y sayo papanig</p>
+                    <p class="poem-line text-blue-900 font-medium fade-in" style="animation-delay: 2.2s;">Kaya mahal na mahal kita Ben</p>
+                    <p class="poem-line text-blue-900 font-medium fade-in" style="animation-delay: 2.4s;">Kahit anong mangyari ikaw paren, again and again</p>
+                </div>
+                
+                <div class="text-right mt-6">
+                    <p class="dancing-font text-xl text-indigo-600">Hi my name is,</p>
+                    <p class="font-semibold text-blue-600">Timothy Arquillo</p>
+                </div>
+            </div>
+            
+            <!-- Interactive elements -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+                <button id="playMusic" class="flex-1 bg-gradient-to-r from-blue-400 to-indigo-500 text-white py-3 px-6 rounded-full flex items-center justify-center gap-2 hover:shadow-lg transition-all">
+                    <i class="fas fa-music"></i>
+                    <span>Sigma Song</span>
+                </button>
+                <button id="showPictures" class="flex-1 bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-3 px-6 rounded-full flex items-center justify-center gap-2 hover:shadow-lg transition-all">
+                    <i class="fas fa-images"></i>
+                    <span>Mga litrato ng kagaguhan</span>
+                </button>
+            </div>
+            
+            <!-- Final message -->
+            <div class="text-center">
+                <p class="text-blue-700 italic">Pakyu ka ben ulol!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Gallery Modal -->
+    <div id="photoGallery" class="photo-gallery hidden">
+        <button class="close-gallery" id="closeGallery">
+            <i class="fas fa-times"></i>
+        </button>
+        <h2 class="gallery-title">Our Memories Together</h2>
+        <div class="photo-container">
+            <div class="photo-item">
+                <img src="puto1.jpg" alt="Friends at sunset">
+                <div class="photo-caption">I</div>
+            </div>
+            <div class="photo-item">
+                <img src="puto2.jpg" alt="Friends laughing">
+                <div class="photo-caption">Love</div>
+            </div>
+            <div class="photo-item">
+                <img src="puto3.jpg" alt="Friends hiking">
+                <div class="photo-caption">You</div>
+            </div>
+            <div class="photo-item">
+                <img src="puto4.jpg" alt="Friends by campfire">
+                <div class="photo-caption">Ben</div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="peacefulMusic" src="sahur.mp3"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const poetryBook = document.getElementById('poetryBook');
+            const playMusicBtn = document.getElementById('playMusic');
+            const showPicturesBtn = document.getElementById('showPictures');
+            const peacefulMusic = document.getElementById('peacefulMusic');
+            const photoGallery = document.getElementById('photoGallery');
+            const closeGalleryBtn = document.getElementById('closeGallery');
+            
+            // Poetry book click - create falling words
+            poetryBook.addEventListener('click', function() {
+                createFallingWords();
+            });
+            
+            // Play music button
+            playMusicBtn.addEventListener('click', function() {
+                if (peacefulMusic.paused) {
+                    peacefulMusic.play();
+                    playMusicBtn.innerHTML = '<i class="fas fa-pause"></i><span>Pause Music</span>';
+                } else {
+                    peacefulMusic.pause();
+                    playMusicBtn.innerHTML = '<i class="fas fa-music"></i><span>Play Peaceful Music</span>';
+                }
+            });
+            
+            // Show pictures button
+            showPicturesBtn.addEventListener('click', function() {
+                photoGallery.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close gallery button
+            closeGalleryBtn.addEventListener('click', function() {
+                photoGallery.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            
+            // Create falling words effect
+            function createFallingWords() {
+                const words = ["Crystal", "Hypothetically", "Dickie", "My name is", "Manok", "Totga"];
+                const colors = ['#3b82f6', '#6366f1', '#06b6d4', '#0ea5e9', '#1d4ed8'];
+                
+                for (let i = 0; i < 30; i++) {
+                    const word = document.createElement('div');
+                    word.textContent = words[Math.floor(Math.random() * words.length)];
+                    word.className = 'absolute text-xl font-medium opacity-80';
+                    word.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    word.style.left = Math.random() * 100 + 'vw';
+                    word.style.top = -30 + 'px';
+                    word.style.opacity = '1';
+                    
+                    document.body.appendChild(word);
+                    
+                    const animationDuration = Math.random() * 5 + 3;
+                    const rotation = Math.random() * 60 - 30;
+                    const xMovement = Math.random() * 200 - 100;
+                    
+                    word.animate([
+                        { top: '-30px', transform: 'rotate(0deg)', opacity: 0 },
+                        { top: '50%', transform: `rotate(${rotation}deg)`, opacity: 1 },
+                        { top: '100vh', transform: `rotate(${rotation*2}deg)`, opacity: 0 }
+                    ], {
+                        duration: animationDuration * 1000,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.9, 1)'
+                    });
+                    
+                    setTimeout(() => {
+                        word.remove();
+                    }, animationDuration * 1000);
+                }
+            }
+            
+            // Animate poem lines on scroll
+            const poemLines = document.querySelectorAll('.poem-line');
+            
+            function checkScroll() {
+                poemLines.forEach(line => {
+                    const lineTop = line.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (lineTop < windowHeight - 50) {
+                        line.style.opacity = '1';
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', checkScroll);
+            checkScroll(); // Check on initial load
+        });
+    </script>
+</body>
+</html>
